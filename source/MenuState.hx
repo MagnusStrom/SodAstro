@@ -10,13 +10,14 @@ import flixel.ui.FlxButton;
 class MenuState extends FlxState
 {
 	var menusprite:FlxSprite;
+	var introImg:FlxSprite;
 
 	override public function create()
 	{
 		var bgSprite:FlxSprite = new FlxSprite(-700, -300).loadGraphic("assets/images/MenuBG.png");
 		add(bgSprite);
 		bgSprite.scale.set(0.5, 0.5);
-		var introImg:FlxSprite = new FlxSprite(-700, -400).loadGraphic("assets/images/introimg.png");
+		introImg = new FlxSprite(-700, -400).loadGraphic("assets/images/introimg.png");
 		// introImg.setGraphicSize(500);
 		add(introImg);
 		introImg.scale.set(0.2, 0.2);
@@ -46,7 +47,7 @@ class MenuState extends FlxState
 		add(playButton);
 		playButton.screenCenter();
 
-		creditsButton = new FlxButton(0, 0, "Credits", clickCredits);
+		creditsButton = new FlxButton(0, 0, "About", clickOptions);
 		creditsButton.scale.set(2, 2);
 		add(creditsButton);
 		creditsButton.screenCenter();
@@ -60,13 +61,24 @@ class MenuState extends FlxState
 		FlxG.switchState(new PlayState());
 	}
 
-	function clickCredits()
+	function clickOptions()
 	{
-		FlxG.switchState(new CreditsState());
+		FlxG.switchState(new OptionsState());
 	}
 
 	override public function update(elapsed:Float)
 	{
+		if (FlxG.keys.anyPressed([SEVEN]))
+		{
+			if (introImg.graphic.key == "assets/images/introimg.png")
+			{
+				introImg.loadGraphic("assets/images/introimg2.png");
+			}
+			else
+			{
+				introImg.loadGraphic("assets/images/introimg.png");
+			}
+		}
 		super.update(elapsed);
 	}
 }
